@@ -3,8 +3,9 @@ const adminArray = [];
 module.exports = {
   createAdmin: (req, res) => {
     try {
-      console.log(req.body);
-      adminArray.push(req.body);
+      // console.log(req.body);
+      const { adminName, password } = req.body;
+      adminArray.push({ adminName, password });
       return res.send({
         response: "admin created successfully",
       });

@@ -16,4 +16,18 @@ module.exports = {
       });
     }
   },
+  getUserSchema: async (req, res, next) => {
+    const username = joi.object({
+      studentname: joi.string().min(3).max(30).required(),
+    });
+
+    try {
+      const validate = await username.validateAsync(req.body);
+      next();
+    } catch (error) {
+      return res.send({
+        error: error,
+      });
+    }
+  },
 };
