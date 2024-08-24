@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../../bin/DB_Connection");
+const roles = require("./roles");
 const { v4: uuid } = require("uuid");
 const { hash } = require("bcryptjs");
 
@@ -10,7 +11,7 @@ users.init(
       type: DataTypes.STRING(60),
       primaryKey: true,
     },
-    username: {
+    studentname: {
       type: DataTypes.STRING(34),
       unique: true,
       allowNull: false,
@@ -18,6 +19,15 @@ users.init(
     password: {
       type: DataTypes.STRING(256),
       allowNull: false,
+    },
+    roleId: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      defaultValue: "",
+      references: {
+        model: roles,
+        key: "roleId",
+      },
     },
   },
   {

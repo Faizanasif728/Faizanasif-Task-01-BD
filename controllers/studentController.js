@@ -1,19 +1,21 @@
 const { createUser, getAllUsers } = require("../Models/userModel");
-
+const responseHandler = require("../responseHandler");
 // const studentArray = [{ studentname: "username1", password: "000001" }];
 module.exports = {
   createStudent: async (req, res) => {
     try {
       const user = await createUser(req.body);
-
-      if (user.error) {
-        return res.send({
-          error: user.error,
-        });
-      }
-      return res.send({
-        response: user.response,
-      });
+      responseHandler(user, res);
+      // ============================
+      // if (user.error) {
+      //   return res.send({
+      //     error: user.error,
+      //   });
+      // }
+      // return res.send({
+      //   response: user.response,
+      // });
+      // ==========================
       // console.log(req.body);
       // const { studentname, password } = req.body;
       // let isExist = false;
@@ -41,12 +43,7 @@ module.exports = {
   getAllStudent: async (req, res) => {
     try {
       const users = await getAllUsers();
-      if (users.error) {
-        return res.send({ error: users.error });
-      }
-      return res.send({
-        response: users,
-      });
+      responseHandler(user, res);
     } catch (error) {
       return res.send({
         error: error,

@@ -9,6 +9,11 @@ roles.init(
       type: DataTypes.STRING(60),
       primaryKey: true,
     },
+    role: {
+      type: DataTypes.ENUM,
+      values: ["Admin", "Instructor", "Trainee"],
+      allowNull: false,
+    },
   },
   {
     timestamps: true,

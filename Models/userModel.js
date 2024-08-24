@@ -28,7 +28,7 @@ module.exports = {
         response: users,
       };
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return { error: error };
     }
   },
