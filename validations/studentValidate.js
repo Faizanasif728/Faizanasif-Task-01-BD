@@ -3,6 +3,7 @@ const joi = require("joi");
 module.exports = {
   createStudentSchema: async (req, res, next) => {
     const createstudent = joi.object({
+      role: joi.valid("Admin", "Instructor", "Trainee").required(),
       studentname: joi.string().min(3).max(30).required(),
       password: joi.string().min(6).max(18).required(),
     });
@@ -18,7 +19,8 @@ module.exports = {
   },
   getUserSchema: async (req, res, next) => {
     const username = joi.object({
-      studentname: joi.string().min(3).max(30).required(),
+      studentname: joi.string().min(3).max(30),
+      userId: joi.string(),
     });
 
     try {

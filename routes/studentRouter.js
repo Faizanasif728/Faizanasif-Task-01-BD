@@ -2,7 +2,8 @@ const {
   createStudent,
   getAllStudent,
   deleteStudent,
-  getUserbyname,
+  getStudentByName,
+  getUser,
 } = require("../controllers/studentController");
 const {
   createStudentSchema,
@@ -13,6 +14,8 @@ var routes = require("express").Router();
 routes.post("/createStudent", createStudentSchema, createStudent);
 routes.get("/getAllStudent", getAllStudent);
 routes.delete("/deleteStudent", deleteStudent);
-routes.get("/getbyusername", getUserSchema, getUserbyname);
+routes.get("/getStudentByName", getUserSchema, getStudentByName);
+
+routes.get("/getStudent", getUserSchema, getUser);
 
 module.exports = routes;

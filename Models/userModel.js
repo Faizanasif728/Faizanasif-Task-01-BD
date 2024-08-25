@@ -21,15 +21,50 @@ module.exports = {
       const users = await models.users.findAll({
         // attributes: ["userId", "username"],
         attributes: {
-          exclude: ["password"],
+          exclude: ["password", "roleId"],
         },
+        include: [
+          {
+            model: models.roles,
+            attributes: ["roleId", "role"],
+          },
+        ],
       });
       return {
         response: users,
       };
     } catch (error) {
       console.error(error);
-      return { error: error };
+      return {
+        error: error,
+      };
+    }
+  },
+  getUser: async (userId, studentname) => {
+    try {
+      const users = await models.users.findOne({
+        // attributes: ["userId", "username"],
+        where: {
+          ...(userId ? { userId: userId } : { studentname: studentname }),
+        },
+        attributes: {
+          exclude: ["password", "roleId"],
+        },
+        include: [
+          {
+            model: models.roles,
+            attributes: ["roleId", "role"],
+          },
+        ],
+      });
+      return {
+        response: users,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error: error,
+      };
     }
   },
 };

@@ -1,14 +1,14 @@
-const { models } = require("../index");
+const { models } = require("../Models/index");
 module.exports = {
-  getRole: async (role) => {
+  getRole: async ({ role }) => {
     try {
-      const role = await models.roles.findOne({
+      const roles = await models.roles.findOne({
         where: {
           role: role,
         },
       });
       return {
-        response: role,
+        response: roles,
       };
     } catch (error) {
       console.log(error);

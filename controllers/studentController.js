@@ -1,39 +1,21 @@
-const { createUser, getAllUsers } = require("../Models/userModel");
+const { getRole } = require("../Models/commonModel");
+const roles = require("../Models/definitions/roles");
+const { createUser, getAllUsers, getUser } = require("../Models/userModel");
 const responseHandler = require("../responseHandler");
-// const studentArray = [{ studentname: "username1", password: "000001" }];
 module.exports = {
   createStudent: async (req, res) => {
     try {
+      const role = await getRole(req.body);
+      if (role.error) {
+        return res.send({
+          error: role.error,
+        });
+      }
+      delete req.body.role;
+      req.body.roleId = role.response.dataValues.roleId;
+      // console.log(role.response.dataValues);
       const user = await createUser(req.body);
       responseHandler(user, res);
-      // ============================
-      // if (user.error) {
-      //   return res.send({
-      //     error: user.error,
-      //   });
-      // }
-      // return res.send({
-      //   response: user.response,
-      // });
-      // ==========================
-      // console.log(req.body);
-      // const { studentname, password } = req.body;
-      // let isExist = false;
-      // studentArray.map((std) => {
-      //   if (std.studentname === studentname) {
-      //     isExist = true;
-      //   }
-      // });
-      // if (!isExist) {
-      //   studentArray.push({ studentname, password });
-      //   return res.send({
-      //     response: "student created successfully",
-      //   });
-      // } else {
-      //   return res.send({
-      //     response: "already Exist",
-      //   });
-      // }
     } catch (error) {
       return res.send({
         error: error.message,
@@ -43,7 +25,7 @@ module.exports = {
   getAllStudent: async (req, res) => {
     try {
       const users = await getAllUsers();
-      responseHandler(user, res);
+      responseHandler(users, res);
     } catch (error) {
       return res.send({
         error: error,
@@ -76,7 +58,7 @@ module.exports = {
       });
     }
   },
-  getUserbyname: (req, res) => {
+  getStudentByName: (req, res) => {
     try {
       const { studentname } = req.query;
       studentArray.map((std) => {
@@ -92,6 +74,16 @@ module.exports = {
     } catch (error) {
       return res.send({
         error: error.message,
+      });
+    }
+  },
+  getUser: async (req, res) => {
+    try {
+      const users = await getUser(req.query);
+      responseHandler(users, res);
+    } catch (error) {
+      return res.send({
+        error: error,
       });
     }
   },
