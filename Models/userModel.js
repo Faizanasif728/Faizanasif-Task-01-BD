@@ -39,6 +39,9 @@ module.exports = {
           {
             model: models.roles,
             attributes: ["roleId", "role"],
+            where: {
+              ...(query.role ? { role: query.role } : true),
+            },
           },
         ],
         order: [
@@ -109,12 +112,12 @@ module.exports = {
   updateUser: async ({ userId, ...body }) => {
     try {
       const user = await models.users.update(
+        { ...body },
         {
           where: {
             userId: userId,
           },
-        },
-        { ...body }
+        }
       );
       return {
         response: user,

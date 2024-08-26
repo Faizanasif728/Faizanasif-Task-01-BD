@@ -52,6 +52,7 @@ module.exports = {
       email: joi.string().email(),
       mobile: joi.string(),
       username: joi.string(),
+      role: joi.string().valid("Admin", "Instructor", "Trainee"),
     });
 
     try {
