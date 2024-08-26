@@ -6,6 +6,7 @@ const {
   getUser,
   deleteUser,
   updateUser,
+  profile,
 } = require("../Models/userModel");
 const responseHandler = require("../responseHandler");
 module.exports = {
@@ -62,6 +63,16 @@ module.exports = {
     try {
       const user = await updateUser(req.body);
       responseHandler(user, res);
+    } catch (error) {
+      return res.send({
+        error: error,
+      });
+    }
+  },
+  getProfile: async (req, res) => {
+    try {
+      const userProfile = await profile(req.user);
+      responseHandler(userProfile, res);
     } catch (error) {
       return res.send({
         error: error,
