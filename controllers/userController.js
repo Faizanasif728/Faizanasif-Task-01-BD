@@ -5,6 +5,7 @@ const {
   getAllUsers,
   getUser,
   deleteUser,
+  updateUser,
 } = require("../Models/userModel");
 const responseHandler = require("../responseHandler");
 module.exports = {
@@ -50,6 +51,16 @@ module.exports = {
   delete_user: async (req, res) => {
     try {
       const user = await deleteUser(req.query);
+      responseHandler(user, res);
+    } catch (error) {
+      return res.send({
+        error: error,
+      });
+    }
+  },
+  update_users: async (req, res) => {
+    try {
+      const user = await updateUser(req.body);
       responseHandler(user, res);
     } catch (error) {
       return res.send({

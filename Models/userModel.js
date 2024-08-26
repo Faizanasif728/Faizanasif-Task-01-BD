@@ -106,9 +106,16 @@ module.exports = {
       };
     }
   },
-  updateUser: async (body) => {
+  updateUser: async ({ userId, ...body }) => {
     try {
-      const user = await models.users.create({ ...body });
+      const user = await models.users.update(
+        {
+          where: {
+            userId: userId,
+          },
+        },
+        { ...body }
+      );
       return {
         response: user,
       };

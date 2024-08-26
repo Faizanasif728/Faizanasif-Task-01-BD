@@ -63,4 +63,23 @@ module.exports = {
       });
     }
   },
+  updateUserSchema: async (req, res, next) => {
+    const updateUser = joi.object({
+      userId: joi.string().required(),
+      firstName: joi.string(),
+      lastName: joi.string(),
+      email: joi.string().email(),
+      mobile: joi.string(),
+      username: joi.string(),
+    });
+
+    try {
+      const validate = await updateUser.validateAsync(req.body);
+      next();
+    } catch (error) {
+      return res.send({
+        error: error,
+      });
+    }
+  },
 };
